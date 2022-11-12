@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-1
+spec:
+  type: ClusterIP
+  selector:
+    sdProject: sd-project
+  ports:
+  - port: 9000
+    targetPort: 80
