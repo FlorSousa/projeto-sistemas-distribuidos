@@ -1,6 +1,6 @@
-import {sequelize as Sequelize} from "sequelize";
-const sequelize = new Sequelize('sisfilme','host','adm',{
-    host:'localhost',
+import Sequelize from "sequelize";
+const sequelize = new Sequelize(process.env.POSTGRES_DB,process.env.POSTGRES_USER, process.env.POSTGRES_DB,{
+    host:process.env.POSTGRES_HOST,
     port:'5432',
     dialect:'postgres'
 })
@@ -21,5 +21,4 @@ const Filmes = sequelize.define('filmes',{
 })
 
 Filmes.sync({force:false})
-
-module.exports = {Sequelize, sequelize, Filmes}
+export default Filmes

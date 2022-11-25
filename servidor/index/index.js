@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-import {Sequelize, sequelize, Filmes} from 'sequelize.js'
+import Filmes from './sequelize.js'
 
 app.use(express.json())
 app.use(express.urlencoded({
