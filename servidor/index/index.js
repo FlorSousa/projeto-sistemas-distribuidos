@@ -27,12 +27,19 @@ app.get("/get/filmes/filter", async (req,res)=>{
 })
 
 app.post("/new/filme", async (req,res)=>{
-    const data = req.body;
-    const [r,created] = await Filmes.findOrCreate({
-        where:data,
-        defaults:data
-    })
-    return created ? res.sendStatus(200) : res.sendStatus(403);
+    try{
+        const data = req.body;
+        console.log(data)
+        const [r,created] = await Filmes.findOrCreate({
+            where:data,
+            defaults:data
+        })
+        created ? res.sendStatus(200) : res.sendStatus(403);
+        
+    }catch(e){
+        res.sendStatus(500)
+    }  
+    
 })
 
 app.get("/", (req,res) => {
