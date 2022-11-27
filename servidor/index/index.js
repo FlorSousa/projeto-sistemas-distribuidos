@@ -8,12 +8,22 @@ app.use(express.urlencoded({
 }))
 
 app.get("/get/filmes", async (req,res)=>{
-    return await Filmes.findAll();
+    try{
+        const r = await Filmes.findAll();
+        res.json(r)
+    }catch(e){
+        console.log(e)
+        res.sendStatus(500)
+    } 
 })
 
 app.get("/get/filmes/filter", async (req,res)=>{
-    const dataFilter = req.query;
-    return await Filmes.findAll({where:{dataFilter}})
+    try{
+        const dataFilter = req.query;
+        res.json(await Filmes.findAll({where:{dataFilter}}))
+    }catch(e){
+        res.sendStatus(500)
+    }
 })
 
 app.post("/new/filme", async (req,res)=>{
@@ -25,4 +35,9 @@ app.post("/new/filme", async (req,res)=>{
     return created ? res.sendStatus(200) : res.sendStatus(403);
 })
 
+app.get("/", (req,res) => {
+    res.json({"msg":"ok"})
+})
+
 app.listen(3030);
+

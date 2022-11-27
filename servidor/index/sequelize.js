@@ -1,7 +1,7 @@
 import Sequelize from "sequelize";
 import dotenv from 'dotenv'
 dotenv.config()
-console.log(process.env.POSTGRES_DB)
+
 const sequelize = new Sequelize(process.env.POSTGRES_DB,process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD,{
     host:process.env.POSTGRES_HOST,
     port:'5432',
@@ -9,19 +9,20 @@ const sequelize = new Sequelize(process.env.POSTGRES_DB,process.env.POSTGRES_USE
 })
 
 const Filmes = sequelize.define('filmes',{
-    Diretor: {
+    diretor: {
         type: Sequelize.STRING
     },
-    Ator: {
+    ator: {
         type: Sequelize.STRING
     },
-    Nome: {
+    nome: {
         type: Sequelize.STRING
     },
-    IMDB: {
+    imdb: {
         type: Sequelize.FLOAT
     }
 })
 
 Filmes.sync({force:false})
+
 export default Filmes
