@@ -20,8 +20,10 @@ app.get("/get/filmes", async (req,res)=>{
 app.get("/get/filmes/filter", async (req,res)=>{
     try{
         const dataFilter = req.query;
-        res.json(await Filmes.findAll({where:{dataFilter}}))
+        console.log(dataFilter)
+        res.json(await Filmes.findAll({where:dataFilter}))
     }catch(e){
+        console.log(e)
         res.sendStatus(500)
     }
 })
