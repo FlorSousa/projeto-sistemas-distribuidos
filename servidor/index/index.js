@@ -8,21 +8,45 @@ app.use(express.urlencoded({
 }))
 
 app.get("/get/filmes", async (req,res)=>{
-    return await Filmes.findAll();
+    try{
+        const r = await Filmes.findAll();
+        res.json(r)
+    }catch(e){
+        console.log(e)
+        res.sendStatus(500)
+    } 
 })
 
 app.get("/get/filmes/filter", async (req,res)=>{
-    const dataFilter = req.query;
-    return await Filmes.findAll({where:{dataFilter}})
+    try{
+        const dataFilter = req.query;
+        console.log(dataFilter)
+        res.json(await Filmes.findAll({where:dataFilter}))
+    }catch(e){
+        console.log(e)
+        res.sendStatus(500)
+    }
 })
 
 app.post("/new/filme", async (req,res)=>{
-    const data = req.body;
-    const [r,created] = await Filmes.findOrCreate({
-        where:data,
-        defaults:data
-    })
-    return created ? res.sendStatus(200) : res.sendStatus(403);
+    try{
+        const data = req.body;
+        console.log(data)
+        const [r,created] = await Filmes.findOrCreate({
+            where:data,
+            defaults:data
+        })
+        created ? res.sendStatus(200) : res.sendStatus(403);
+        
+    }catch(e){
+        res.sendStatus(500)
+    }  
+    
+})
+
+app.get("/", (req,res) => {
+    res.json({"msg":"ok"})
 })
 
 app.listen(3030);
+
