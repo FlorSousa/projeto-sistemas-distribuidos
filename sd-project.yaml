@@ -18,7 +18,7 @@ kind: Deployment
 metadata:
   name: sd-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: filmesnode
@@ -39,8 +39,44 @@ spec:
         - name: filmes-node
           image: florsousa/servidor_node
           resources:
+            requests:
+              cpu: "10m"
             limits: 
               memory: "128Mi"
               cpu: "500m"
         
-          
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: sd-autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sd-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 1
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: AverageValue
+        averageValue: 1Mi
+
+  # Uncomment these lines if you create the custom packets_per_second metric and
+  # configure your app to export the metric.
+  # - type: Pods
+  #   pods:
+  #     metric:
+  #       name: packets_per_second
+  #     target:
+  #       type: AverageValue
+  #       averageValue: 100          
