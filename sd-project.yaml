@@ -1,5 +1,17 @@
 ---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pg-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: sisfilme 
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: pg123
+  POSTGRES_HOST: localhost
+---
+apiVersion: v1
 kind: Service 
 metadata:
   name: sd-service
@@ -10,19 +22,8 @@ spec:
     - protocol: 'TCP'
       port: 3030
       targetPort: 3030
-  type: LoadBalancer
 
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pg-config
-  labels:
-    app: postgres
-data:
-  POSTGRES_DB: db_project 
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: pg123
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -41,4 +42,17 @@ spec:
     spec:
       containers:
         - name: filmes-node
-          image: florsousa/teste
+          image: florsousa/servidor_node
+          resources:
+            limits: 
+              memory: "128Mi"
+              cpu: "500m"
+        - name: db-filmes
+          image: postgres:10.4
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
+          
