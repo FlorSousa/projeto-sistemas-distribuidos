@@ -78,7 +78,7 @@ metadata:
   name: sd-service
 spec:
   selector:
-    run: filmesnode
+    app: filmesnode
   ports:
     - port: 3030
 
@@ -133,10 +133,10 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 1
+        averageUtilization: 2
   - type: Resource
     resource:
       name: memory
       target:
         type: AverageValue
-        averageValue: 1Mi
+        averageValue: 150Mi
