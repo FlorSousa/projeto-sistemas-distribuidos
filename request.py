@@ -1,4 +1,5 @@
 import requests
+import os
 from random import randint
 from dotenv import dotenv_values
 env = dotenv_values(".env")
@@ -41,7 +42,9 @@ def run():
          with requests.Session() as request:
             make_get(requests)
             make_post(requests)
-            
+            f = lambda: os.system("cls")
+            f()
+            print("Fazendo requisições")
 
 
-run()
+run()s
