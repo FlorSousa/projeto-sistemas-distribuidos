@@ -3,6 +3,7 @@ import os
 from random import randint
 from dotenv import dotenv_values
 env = dotenv_values(".env")
+f = lambda: os.system("cls")
 
 def make_post(requests):
     body = [{
@@ -39,12 +40,15 @@ def make_get(requests):
 
 def run():
     while True:
-         with requests.Session() as request:
-            make_get(requests)
-            make_post(requests)
-            f = lambda: os.system("cls")
+        try:
+            with requests.Session() as request:
+                make_get(requests)
+                make_post(requests)
+                f()
+                print("Fazendo requisições")
+        except:
             f()
-            print("Fazendo requisições")
+            print("Erro")
 
 
-run()s
+run()
