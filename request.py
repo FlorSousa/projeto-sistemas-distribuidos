@@ -33,10 +33,10 @@ def make_post(requests):
     ]
     
     out_b = body[randint(0,len(body)-1)]
-    requests.post(env["URL_POST"], json=out_b)
-
+    requests.post("http://127.0.0.1:"+env["PORT"]+"/new/filme", json=out_b)
+ 
 def make_get(requests):
-    requests.get(env["URL"])
+    requests.get("http://127.0.0.1:"+env["PORT"])
 
 def run():
     while True:
