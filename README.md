@@ -21,7 +21,7 @@ Certifique-se de ter os seguintes requisitos instalados em seu ambiente de desen
 - [Node.js](https://nodejs.org/)
 - [Python](https://www.python.org/)
 - [PostgreSQL](https://www.postgresql.org/)
-
+- [Minikube](https://kubernetes.io/pt-br/docs/tutorials/hello-minikube)
 ## Configuração e Implantação
 
 Siga as instruções abaixo para configurar e implantar o ambiente de autoscaling:
@@ -37,21 +37,22 @@ git clone https://github.com/FlorSousa/projeto-sistemas-distribuidos.git
 ```bash
 cd projeto-sistemas-distribuidos
 ```
-
-3. Configuração da API Node.js:
-
-- ...
-- ...
-
-4. Configuração do Banco de Dados PostgreSQL:
-
-- ...
-- ...
-
-5. Implantação no Kubernetes:
-
-- ...
-- ...
+3. Inicie o minikube
+```bash
+minikube start
+```
+4. Inicie o dashboard do minikube
+```bash
+minikube dashboard
+```
+5. Use o arquivo yaml para gerar a aplicação
+```bash
+kubectl apply -f sd-project.yaml
+```
+6. Inicie o serviço
+```
+minikube service sd-service
+```
 
 ## Testando o Autoscaling
 
@@ -62,6 +63,11 @@ python request.py
 ```
 
 O script irá gerar uma carga simulada de requisições à API Node.js, permitindo avaliar o comportamento do autoscaling horizontal.
+
+## Para ver as metricas utilize
+```
+kubectl describe hpa sd-autoscaling
+```
 
 ## Licença
 
